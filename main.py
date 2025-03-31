@@ -1,12 +1,18 @@
 from fastapi import FastAPI
 from routes.carTelemetry import (
-    getDriverLapData,
-    getFastestSessionLap,
-    getDriverPersonalBestLap,
-    getDriverLaps
+  getDriverLapData,
+  getFastestSessionLap,
+  getDriverPersonalBestLap,
+  getDriverLaps
+)
+from routes.seasonInfo import (
+  getSessioninfo,
+  getSessionWeatherData  
 )
 
 app = FastAPI()
+
+# Car telemetry
 
 @app.get("/driver-lap-telemetry/{year}/{gp}/{session_type}/{driver}/{lap_number}")
 def driver_lap_telemetry(year: int, gp: str, session_type: str, driver: str, lap_number: int):
@@ -23,3 +29,13 @@ def personal_best_lap_telemetry(year: int, gp: str, session_type: str, driver: s
 @app.get("/driver-laps/{year}/{gp}/{session_type}/{driver}")
 def driver_laps(year: int, gp: str, session_type: str, driver: str):
   return getDriverLaps(year, gp, session_type, driver)
+
+# Session info
+
+@app.get("/session-info/{year}/{gp}/{session_type}")
+def session_info(year: int, gp: str, session_type: str):
+  return getSessioninfo(year, gp, session_type)
+
+@app.get("/session-weather/{year}/{gp}/{session_type}")
+def session_weather(year:int, gp: str, session_type: str):
+  return getSessionWeatherData(year, gp, session_type)
