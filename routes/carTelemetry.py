@@ -8,20 +8,17 @@ def getDriverLapData(year: int, gp: str, session_type: str, driver: str, lap_num
   raceSession = fastf1.get_session(year, gp, session_type)
   raceSession.load(telemetry=True)
 
-  driverData = raceSession.laps.pick_drivers(driver).pick_laps(lap_number)
-  if driverData.empty:
+  driverLapData = raceSession.laps.pick_drivers(driver).pick_laps(lap_number)
+  if driverLapData.empty:
     raise HTTPException(status_code=404, detail="Driver not found or no lap data available.")
 
-  car_data = driverData.get_car_data()
-  lap_data = driverData.to_dict(orient="list")  # Convert lap data to a JSON-serializable dictionary
-  car_data_dict = car_data.to_dict(orient="list")  # Convert car data to a JSON-serializable dictionary
-
+  carData = driverLapData.get_car_data()
 
   return {
     "track": raceSession.event['EventName'],
-    "compound":driverData["Compound"].iloc[0],
-    "lap_data": lap_data,
-    "car_data": car_data_dict
+    "compound":driverLapData["Compound"].iloc[0],
+    "lap_data": driverLapData.to_dict(orient="list"),
+    "car_data": carData.to_dict(orient="list")
   }
 
 def getFastestSessionLap(year: int, gp: str, session_type: str):
@@ -53,7 +50,7 @@ def getFastestSessionLap(year: int, gp: str, session_type: str):
     "car_data": carData
   }
 
-def getDriverPersonalBestLap(year: int, gp: str | int, session_type: str, driver: str):
+def getDriverPersonalBestLap(year: int, gp: str, session_type: str, driver: str):
     # Endpoint to retrieve the personal best lap info for a specific driver in a session.
 
     # fastf1.Cache.enable_cache("./cache")  # Enable caching for better performance
@@ -68,7 +65,7 @@ def getDriverPersonalBestLap(year: int, gp: str | int, session_type: str, driver
   if driverBestLap.empty:
     raise HTTPException(status_code=404, detail="No lap data available for the driver.")
 
-  personal_best_lap_car_data = driverBestLap.get_car_data().to_dict(orient="list")
+  bestLapCarData = driverBestLap.get_car_data()
   if driverBestLap.empty:
     raise HTTPException(status_code=404, detail="No lap data available for the session.")
   
@@ -77,7 +74,7 @@ def getDriverPersonalBestLap(year: int, gp: str | int, session_type: str, driver
     "lap_time": str(driverBestLap['LapTime']),
     "lap_number": int(driverBestLap['LapNumber']),
     "team": driverBestLap['Team'],
-    "car_data": personal_best_lap_car_data
+    "car_data": bestLapCarData.to_dict(orient="list")
 }
 
 def getDriverLaps(year: int, gp: str, session_type: str, driver: str):
