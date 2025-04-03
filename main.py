@@ -7,13 +7,13 @@ from routes.sessionInfo import (
   getSessioninfo,
   getSessionWeatherData , 
   getDriversInSession,
-  getSessionTimingData
+  getSessionTimingData,
+  getSessionRaceControlMessages
 )
 from routes.lapRecords import(
   getDriverPersonalBestLap,
   getFastestSessionLap
 )
-
 from routes.trackInfo import(
   getCircuitInformation,
   getTrackStatusHistory  
@@ -55,8 +55,11 @@ def session_drivers(year: int, gp: str, session_type: str):
 
 @app.get("/session-time/{year}/{gp}/{session_type}")
 def session_time(year: int, gp: str, session_type: str):
-  return getSessionTimingData(year, gp, session_type)  
+  return getSessionTimingData(year, gp, session_type) 
 
+@app.get("/session-race-control-messages/{year}/{gp}/{session_type}")
+def race_control_messages(year: int, gp: str, session_type: str):
+  return getSessionRaceControlMessages(year, gp, session_type)
 
 # Endpoints related to track information
 
