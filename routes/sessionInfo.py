@@ -51,3 +51,17 @@ def getDriversInSession(year: int, gp: str, sessionType: str):
   return {
     "drivers": allDriverInfo  
   }
+
+def getSessionRaceControlMessages(year: int, gp: str, sessionType: str):
+  raceSession = fastf1.get_session(year, gp, sessionType)
+  raceSession.load(messages=True)
+  
+  raceControlMessages = raceSession.race_control_messages
+  raceControlMessages = raceControlMessages.replace([float('inf'), float('-inf')], None).fillna(value="None")
+  
+  if raceControlMessages is None or len(raceControlMessages) == 0:
+    raise HTTPException(status_code=404, detail="Race control data not found or no race control data available.")
+  
+  return {
+    "race_control_messages": raceControlMessages.to_dict(orient="list") 
+  }
