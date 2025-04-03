@@ -1,12 +1,12 @@
 from fastapi import HTTPException
 import fastf1
+from utils.sessionLoad import loadSession
 
-def getDriverLapData(year: int, gp: str, session_type: str, driver: str, lap_number: int):
+def getDriverLapData(year: int, granPrix: str, sessionType: str, driver: str, lap_number: int):
   # Endpoint to retrieve car data and lap data for a specific driver and lap number.
 
   # fastf1.Cache.enable_cache("./cache")  # Enable caching for better performance
-  raceSession = fastf1.get_session(year, gp, session_type)
-  raceSession.load(telemetry=True)
+  raceSession = loadSession(year, granPrix, sessionType)
 
   driverLapData = raceSession.laps.pick_drivers(driver).pick_laps(lap_number)
   if driverLapData.empty:
@@ -21,10 +21,9 @@ def getDriverLapData(year: int, gp: str, session_type: str, driver: str, lap_num
     "car_data": carData.to_dict(orient="list")
   }
 
-def getDriverLaps(year: int, gp: str, session_type: str, driver: str):
+def getDriverLaps(year: int, granPrix: str, sessionType: str, driver: str):
   
-  raceSession = fastf1.get_session(year, gp, session_type)
-  raceSession.load()
+  raceSession = loadSession(year, granPrix, sessionType)
   
   driverLapInfo = raceSession.laps.pick_drivers(driver)
   if driverLapInfo.empty:

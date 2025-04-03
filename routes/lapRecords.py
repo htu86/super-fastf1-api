@@ -1,13 +1,12 @@
 import fastf1
 from fastapi import HTTPException
+from utils.sessionLoad import loadSession
 
-def getFastestSessionLap(year: int, gp: str, session_type: str):
+def getFastestSessionLap(year: int, granPrix: str, sessionType: str):
   # Endpoint to retrieve the fastest lap info in a session.
 
-  # fastf1.Cache.enable_cache("./cache")  # Enable caching for better performance
   try:
-    raceSession = fastf1.get_session(year, gp, session_type)
-    raceSession.load()
+    raceSession = loadSession(year, granPrix, sessionType)
   except Exception as e:
     raise HTTPException(status_code=400, detail=f"Error loading session: {str(e)}")
 
@@ -30,12 +29,9 @@ def getFastestSessionLap(year: int, gp: str, session_type: str):
     "car_data": carData
   }
 
-def getDriverPersonalBestLap(year: int, gp: str, session_type: str, driver: str):
-    # Endpoint to retrieve the personal best lap info for a specific driver in a session.
+def getDriverPersonalBestLap(year: int, granPrix: str, sessionType: str, driver: str):
 
-    # fastf1.Cache.enable_cache("./cache")  # Enable caching for better performance
-  raceSession = fastf1.get_session(year, gp, session_type)
-  raceSession.load()
+  raceSession = loadSession(year, granPrix, sessionType)
 
   driverData = raceSession.laps.pick_drivers(driver)
   if driverData.empty:

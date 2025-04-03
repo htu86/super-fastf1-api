@@ -1,9 +1,9 @@
 from fastapi import HTTPException
+from utils.sessionLoad import loadSession
 import fastf1
 
 def getSessioninfo(year: int, granPrix: str, sessionType: str):
-  raceSession = fastf1.get_session(year, granPrix, sessionType)
-  raceSession.load()
+  raceSession = loadSession(year, granPrix, sessionType)
   
   sessionInfo = raceSession.session_info
   if not sessionInfo:
@@ -14,8 +14,7 @@ def getSessioninfo(year: int, granPrix: str, sessionType: str):
   }
 
 def getSessionTimingData(year: int, granPrix: str, sessionType: str):
-  raceSession = fastf1.get_session(year, granPrix, sessionType)
-  raceSession.load()
+  raceSession = loadSession(year, granPrix, sessionType)
   
   sessionTimingData = raceSession.session_status
   
@@ -24,8 +23,7 @@ def getSessionTimingData(year: int, granPrix: str, sessionType: str):
   }
 
 def getSessionWeatherData(year: int, granPrix: str, sessionType: str):
-  raceSession = fastf1.get_session(year, granPrix, sessionType)
-  raceSession.load()
+  raceSession = loadSession(year, granPrix, sessionType)
   
   weatherData = raceSession.weather_data
   if weatherData is None or len(weatherData) == 0:
@@ -35,9 +33,8 @@ def getSessionWeatherData(year: int, granPrix: str, sessionType: str):
     "weather": weatherData.to_dict(orient="list")
   }
 
-def getDriversInSession(year: int, gp: str, sessionType: str):
-  raceSession = fastf1.get_session(year, gp, sessionType)
-  raceSession.load()  
+def getDriversInSession(year: int, granPrix: str, sessionType: str):
+  raceSession = loadSession(year, granPrix, sessionType) 
 
   sessionDrivers = raceSession.drivers
   if not sessionDrivers:
@@ -52,10 +49,9 @@ def getDriversInSession(year: int, gp: str, sessionType: str):
     "drivers": allDriverInfo  
   }
 
-def getSessionRaceControlMessages(year: int, gp: str, sessionType: str):
-  raceSession = fastf1.get_session(year, gp, sessionType)
-  raceSession.load(messages=True)
-  
+def getSessionRaceControlMessages(year: int, granPrix: str, sessionType: str):
+  raceSession = loadSession(year, granPrix, sessionType)
+
   raceControlMessages = raceSession.race_control_messages
   raceControlMessages = raceControlMessages.replace([float('inf'), float('-inf')], None).fillna(value="None")
   
@@ -65,3 +61,4 @@ def getSessionRaceControlMessages(year: int, gp: str, sessionType: str):
   return {
     "race_control_messages": raceControlMessages.to_dict(orient="list") 
   }
+

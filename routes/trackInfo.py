@@ -1,8 +1,8 @@
 import fastf1
+from utils.sessionLoad import loadSession
 
 def getCircuitInformation(year: int, granPrix: str, sessionType: str):
-  raceSession = fastf1.get_session(year, granPrix, sessionType)
-  raceSession.load()  
+  raceSession = loadSession(year, granPrix, sessionType)
 
   circuitInformation = raceSession.get_circuit_info()
   return {
@@ -13,8 +13,7 @@ def getCircuitInformation(year: int, granPrix: str, sessionType: str):
   }
 
 def getTrackStatusHistory(year: int, granPrix: str, sessionType: str):
-  raceSession = fastf1.get_session(year, granPrix, sessionType)
-  raceSession.load()  
+  raceSession = loadSession(year, granPrix, sessionType)
 
   trackStatusHistory = raceSession.track_status.to_dict(orient="list")
   return {
