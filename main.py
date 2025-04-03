@@ -18,6 +18,9 @@ from routes.trackInfo import(
   getCircuitInformation,
   getTrackStatusHistory  
 )
+from routes.eventSchedule import (
+  getEventSchedule
+)
 
 app = FastAPI()
 
@@ -60,6 +63,13 @@ def session_time(year: int, gp: str, session_type: str):
 @app.get("/session-race-control-messages/{year}/{gp}/{session_type}")
 def race_control_messages(year: int, gp: str, session_type: str):
   return getSessionRaceControlMessages(year, gp, session_type)
+
+# Event schedule
+
+@app.get("/event-schedule/{year}")
+def event_schedule(year: int):
+  return getEventSchedule(year)
+
 
 # Endpoints related to track information
 
