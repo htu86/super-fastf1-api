@@ -1,12 +1,16 @@
 from fastapi import HTTPException
 import fastf1
 from utils.sessionLoad import loadSession
+from utils.validateInput import validateInputs
 
 def getDriverLapData(year: int, granPrix: str, sessionType: str, driver: str, lap_number: int):
-  # Endpoint to retrieve car data and lap data for a specific driver and lap number.
 
-  # fastf1.Cache.enable_cache("./cache")  # Enable caching for better performance
-  raceSession = loadSession(year, granPrix, sessionType)
+  validateInputs(year, granPrix , sessionType )
+  try:
+    raceSession = loadSession(year, granPrix, sessionType)
+  except Exception as e:
+    raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
+  
 
   driverLapData = raceSession.laps.pick_drivers(driver).pick_laps(lap_number)
   if driverLapData.empty:
@@ -23,7 +27,11 @@ def getDriverLapData(year: int, granPrix: str, sessionType: str, driver: str, la
 
 def getDriverLaps(year: int, granPrix: str, sessionType: str, driver: str):
   
-  raceSession = loadSession(year, granPrix, sessionType)
+  validateInputs(year, granPrix , sessionType )
+  try:
+    raceSession = loadSession(year, granPrix, sessionType)
+  except Exception as e:
+    raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
   
   driverLapInfo = raceSession.laps.pick_drivers(driver)
   if driverLapInfo.empty:

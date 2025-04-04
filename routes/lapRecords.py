@@ -1,14 +1,17 @@
 import fastf1
 from fastapi import HTTPException
 from utils.sessionLoad import loadSession
+from utils.validateInput import validateInputs
 
 def getFastestSessionLap(year: int, granPrix: str, sessionType: str):
   # Endpoint to retrieve the fastest lap info in a session.
 
+  validateInputs(year, granPrix , sessionType )
   try:
     raceSession = loadSession(year, granPrix, sessionType)
   except Exception as e:
-    raise HTTPException(status_code=400, detail=f"Error loading session: {str(e)}")
+    raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
+  
 
   if raceSession.event['EventName'] is None:
     raise HTTPException(status_code=404, detail="Grand Prix not found.")
@@ -31,7 +34,12 @@ def getFastestSessionLap(year: int, granPrix: str, sessionType: str):
 
 def getDriverPersonalBestLap(year: int, granPrix: str, sessionType: str, driver: str):
 
-  raceSession = loadSession(year, granPrix, sessionType)
+  validateInputs(year, granPrix , sessionType )
+  try:
+    raceSession = loadSession(year, granPrix, sessionType)
+  except Exception as e:
+    raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
+  
 
   driverData = raceSession.laps.pick_drivers(driver)
   if driverData.empty:
