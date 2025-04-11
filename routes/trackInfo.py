@@ -2,44 +2,43 @@ from utils.sessionLoad import loadSession
 from fastapi import HTTPException
 from utils.validateInput import validateInputs
 
-def getCircuitInformation(year: int, granPrix: str, sessionType: str):
-  validateInputs(year, granPrix , sessionType )  
+def get_circuit_info(year: int, gran_prix: str, session_type: str):
+  validateInputs(year, gran_prix , session_type )  
 
   try:
-    raceSession = loadSession(year, granPrix, sessionType)
+    race_session = loadSession(year, gran_prix, session_type)
   except Exception as e:
     raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
 
-  circuitInformation = raceSession.get_circuit_info()
-  circuitCorners = circuitInformation.corners.to_dict("list") 
-  circuitRotation = circuitInformation.rotation 
-  marshallSectors = circuitInformation.marshal_sectors.to_dict("list")  
-  marshallLights = circuitInformation.marshal_lights.to_dict("list")  
+  circuit_data = race_session.get_circuit_info()
+  circuit_corners = circuit_data.corners.to_dict("list") 
+  circuits_rotation = circuit_data.rotation 
+  marshall_sectors = circuit_data.marshal_sectors.to_dict("list")  
+  marshall_lights = circuit_data.marshal_lights.to_dict("list")  
 
-  if not circuitCorners or not circuitRotation or not marshallLights or not marshallSectors:
+  if not circuit_corners or not circuits_rotation or not marshall_lights or not marshall_sectors:
     raise HTTPException(status_code=404, detail="Circuit data not found or no data available.")
 
   return {
-    "corners": circuitCorners,
-    "rotation": circuitRotation,
-    "marshall_sectors": marshallSectors,
-    "marshall_lights": marshallLights
+    "corners": circuit_corners,
+    "rotation": circuits_rotation,
+    "marshall_sectors": marshall_sectors,
+    "marshall_lights": marshall_lights
   }
 
-
-def getTrackStatusHistory(year: int, granPrix: str, sessionType: str):
-  validateInputs(year, granPrix , sessionType )    
+def get_track_status_history(year: int, gran_prix: str, session_type: str):
+  validateInputs(year, gran_prix , session_type )    
 
   try:
-    raceSession = loadSession(year, granPrix, sessionType)
+    race_session = loadSession(year, gran_prix, session_type)
   except Exception as e:
     raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
 
-  trackStatusHistory = raceSession.track_status.to_dict(orient="list")
+  track_status_history = race_session.track_status.to_dict(orient="list")
 
-  if not trackStatusHistory:
+  if not track_status_history:
     raise HTTPException(status_code=404, detail="Track status history data not found or no data available.")  
 
   return {
-    "track_status_history": trackStatusHistory
+    "track_status_history": track_status_history
   }

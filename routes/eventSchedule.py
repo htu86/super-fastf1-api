@@ -1,12 +1,12 @@
 import fastf1
 from fastapi import HTTPException
 
-def getEventSchedule(year: int):
+def get_event_schedule(year: int):
   
-  eventSchedule = fastf1.get_event_schedule(year)
+  event_schedule = fastf1.get_event_schedule(year)
   
-  if eventSchedule.empty:
+  if event_schedule.empty:
     raise HTTPException(status_code=404, detail="The schedule for this year does not exist or isnt available yet!")
   return {
-    "schedule": eventSchedule.to_dict(orient="list") 
+    "schedule": event_schedule.to_dict(orient="list") 
   }
