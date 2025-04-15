@@ -1,11 +1,11 @@
 from fastapi import HTTPException
-from utils.sessionLoad import loadSession
-from utils.validateInput import validateInputs
+from utils.sessionLoad import load_session
+from utils.validateInput import validate_inputs
 
 def get_session_info(year: int, gran_prix: str, session_type: str):
-  validateInputs(year, gran_prix , session_type )
+  validate_inputs(year, gran_prix , session_type )
   try:
-    race_session = loadSession(year, gran_prix, session_type)
+    race_session = load_session(year, gran_prix, session_type)
   except Exception as e:
     raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
   
@@ -18,12 +18,11 @@ def get_session_info(year: int, gran_prix: str, session_type: str):
   }
 
 def get_session_timing_data(year: int, gran_prix: str, session_type: str):
-  validateInputs(year, gran_prix , session_type )
+  validate_inputs(year, gran_prix , session_type )
   try:
-    race_session = loadSession(year, gran_prix, session_type)
+    race_session = load_session(year, gran_prix, session_type)
   except Exception as e:
     raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
-  
   
   session_timing_data = race_session.session_status
   if session_timing_data is None:
@@ -34,7 +33,11 @@ def get_session_timing_data(year: int, gran_prix: str, session_type: str):
   }
 
 def get_session_weather_data(year: int, gran_prix: str, session_type: str):
-  race_session = loadSession(year, gran_prix, session_type)
+  validate_inputs(year, gran_prix, session_type)
+  try:
+    race_session = load_session(year, gran_prix, session_type)
+  except Exception as e:
+    raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
   
   weather_data = race_session.weather_data
   if weather_data is None or len(weather_data) == 0:
@@ -45,13 +48,12 @@ def get_session_weather_data(year: int, gran_prix: str, session_type: str):
   }
 
 def get_drivers_in_session(year: int, gran_prix: str, session_type: str):
-  validateInputs(year, gran_prix , session_type )
+  validate_inputs(year, gran_prix , session_type )
   try:
-    race_session = loadSession(year, gran_prix, session_type)
+    race_session = load_session(year, gran_prix, session_type)
   except Exception as e:
     raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
   
-
   session_drivers = race_session.drivers
   if not session_drivers:
     raise HTTPException(status_code=404, detail="Driver data not found or no data available.")
@@ -66,9 +68,9 @@ def get_drivers_in_session(year: int, gran_prix: str, session_type: str):
   }
 
 def get_session_race_control_messages(year: int, gran_prix: str, session_type: str):
-  validateInputs(year, gran_prix , session_type )
+  validate_inputs(year, gran_prix , session_type )
   try:
-    race_session = loadSession(year, gran_prix, session_type)
+    race_session = load_session(year, gran_prix, session_type)
   except Exception as e:
     raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
   

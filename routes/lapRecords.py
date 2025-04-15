@@ -1,13 +1,13 @@
 from fastapi import HTTPException
-from utils.sessionLoad import loadSession
-from utils.validateInput import validateInputs
+from utils.sessionLoad import load_session
+from utils.validateInput import validate_inputs
 
 def get_fastest_session_lap(year: int, gran_prix: str, session_type: str):
     # Endpoint to retrieve the fastest lap info in a session.
 
-    validateInputs(year, gran_prix, session_type)
+    validate_inputs(year, gran_prix, session_type)
     try:
-      race_session = loadSession(year, gran_prix, session_type)
+      race_session = load_session(year, gran_prix, session_type)
     except Exception as e:
       raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
 
@@ -34,9 +34,9 @@ def get_fastest_session_lap(year: int, gran_prix: str, session_type: str):
 
 def get_driver_personal_best_lap(year: int, gran_prix: str, session_type: str, driver: str):
 
-  validateInputs(year, gran_prix , session_type )
+  validate_inputs(year, gran_prix , session_type )
   try:
-    race_session = loadSession(year, gran_prix, session_type)
+    race_session = load_session(year, gran_prix, session_type)
   except Exception as e:
     raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
   

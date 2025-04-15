@@ -1,12 +1,12 @@
-from utils.sessionLoad import loadSession
 from fastapi import HTTPException
-from utils.validateInput import validateInputs
+from utils.sessionLoad import load_session
+from utils.validateInput import validate_inputs
 
 def get_circuit_info(year: int, gran_prix: str, session_type: str):
-  validateInputs(year, gran_prix , session_type )  
+  validate_inputs(year, gran_prix , session_type )  
 
   try:
-    race_session = loadSession(year, gran_prix, session_type)
+    race_session = load_session(year, gran_prix, session_type)
   except Exception as e:
     raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
 
@@ -27,10 +27,10 @@ def get_circuit_info(year: int, gran_prix: str, session_type: str):
   }
 
 def get_track_status_history(year: int, gran_prix: str, session_type: str):
-  validateInputs(year, gran_prix , session_type )    
+  validate_inputs(year, gran_prix , session_type )    
 
   try:
-    race_session = loadSession(year, gran_prix, session_type)
+    race_session = load_session(year, gran_prix, session_type)
   except Exception as e:
     raise HTTPException(status_code=500, detail=f"Failed to load session: {str(e)}")
 
