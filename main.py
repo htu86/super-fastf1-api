@@ -32,17 +32,17 @@ app = FastAPI()
 def driver_lap_telemetry(year: int, gp: str, session_type: str, driver: str, lap_number: int):
   return get_driver_lap_data(year, gp, session_type, driver, lap_number)
 
-@app.get("/fastest-session-lap-telemetry/{year}/{gp}/{session_type}")
+@app.get("/session-fastest-lap-telemetry/{year}/{gp}/{session_type}")
 @rate_limit(max_calls=10, max_time=60)
 def fastest_session_lap_telemetry(year: int, gp: str, session_type: str):
   return get_fastest_session_lap(year, gp, session_type)
 
-@app.get("/personal-best-lap-telemetry/{year}/{gp}/{session_type}/{driver}")
+@app.get("/driver-fastest-lap-telemetry/{year}/{gp}/{session_type}/{driver}")
 @rate_limit(max_calls=10, max_time=60)
 def personal_best_lap_telemetry(year: int, gp: str, session_type: str, driver: str):
   return get_driver_personal_best_lap(year, gp, session_type, driver)
 
-@app.get("/driver-laps/{year}/{gp}/{session_type}/{driver}")
+@app.get("/driver-all-laps-telemetry/{year}/{gp}/{session_type}/{driver}")
 @rate_limit(max_calls=10, max_time=60)
 def driver_laps(year: int, gp: str, session_type: str, driver: str):
   return get_driver_laps(year, gp, session_type, driver)
@@ -69,13 +69,12 @@ def session_drivers(year: int, gp: str, session_type: str):
 def session_time(year: int, gp: str, session_type: str):
   return get_session_timing_data(year, gp, session_type) 
 
-@app.get("/session-race-control-messages/{year}/{gp}/{session_type}")
+@app.get("/session-rc-messages/{year}/{gp}/{session_type}")
 @rate_limit(max_calls=10, max_time=60)
 def race_control_messages(year: int, gp: str, session_type: str):
   return get_session_race_control_messages(year, gp, session_type)
 
 # Event schedule
-
 
 @app.get("/event-schedule/{year}")
 @rate_limit(max_calls=10, max_time=60)
@@ -89,7 +88,7 @@ def event_schedule(year: int):
 def circuit_info(year: int, gp: str, session_type: str):
   return get_circuit_info(year, gp, session_type)
 
-@app.get("/track-status-history/{year}/{gp}/{session_type}")
+@app.get("/circuit-status-history/{year}/{gp}/{session_type}")
 @rate_limit(max_calls=10, max_time=60)
 def track_status_history(year: int, gp: str, session_type: str):
   return get_track_status_history(year, gp, session_type)
