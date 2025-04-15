@@ -1,7 +1,7 @@
 import fastf1
 
-def loadSession(sessionYear: int, grandPrix: str, sessionType: str):
-  raceSession = fastf1.get_session(sessionYear, grandPrix, sessionType)
-  raceSession.load()
+def load_session(session_year: int, grand_prix: str, session_type: str):
+  race_session = fastf1.get_session(session_year, grand_prix, session_type)
+  race_session.load()
   
-  return raceSession
+  return race_session
