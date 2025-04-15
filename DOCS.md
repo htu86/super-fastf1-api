@@ -2,18 +2,18 @@
 
 > ### Table of contents
 > * [Basic information](#basic-information)
-> * [/driver-lap-telemetry](#driver-lap-telemetry)
-> * [/driver-all-laps-telemetry](#driver-all-laps-telemetry)
-> * [/driver-fastest-lap-telemetry](#driver-fastest-lap-telemetry)
-> * [/session-fastest-lap-telemetry](#session-fastest-lap-telemetry)
-> * [/session-info](#session-info)
-> * [/session-weather](#session-weather)
-> * [/session-drivers](#session-drivers)
-> * [/session-time](#session-time)
-> * [/session-rc-messages](#session-rc-messages)
-> * [/circuit-geographic-data](#circuit-geographic-data)
-> * [/circuit-status-history](#circuit-status-history)
-> * [/event-schedule](#event-schedule)
+> * [Driver Lap Telemetry](#driver-lap-telemetry)
+> * [Driver All Laps Telemetry](#driver-all-laps-telemetry)
+> * [Driver Fastest Lap Telemetry](#driver-fastest-lap-telemetry)
+> * [Session Fastest Lap Telemetry](#session-fastest-lap-telemetry)
+> * [Session Info](#session-info)
+> * [Session Weather](#session-weather)
+> * [Session Drivers](#session-drivers)
+> * [Session Time](#session-time)
+> * [Session RC Messages](#session-rc-messages)
+> * [Circuit Geographic Data](#circuit-geographic-data)
+> * [Circuit Status History](#circuit-status-history)
+> * [Event Schedule](#event-schedule)
 
 ---
 ## Basic information
@@ -22,8 +22,10 @@
 * All requests returns JSON files
 
 ---
+## Driver Lap Telemetry
 
-## /driver-lap-telemetry/{year}/{gp}/{session_type}/{driver}/{lap_number}
+ ` /driver-lap-telemetry/{year}/{gp}/{session_type}/{driver}/{lap_number}`
+
 **Description:** Retrieves basic information about the driver and track along with car telemetry data for a specific driver's lap.  
 **Method:** `GET`  
 **Parameters:**
@@ -35,8 +37,10 @@
 
 
 ---
+## Driver All Laps Telemetry
 
-## /driver-all-laps-telemetry/{year}/{gp}/{session_type}/{driver}
+`/driver-all-laps-telemetry/{year}/{gp}/{session_type}/{driver}`
+
 **Description:** Retrieves basic information along with car telemetry data for all laps of a specific driver.  
 **Method:** `GET`  
 **Parameters:**
@@ -46,8 +50,9 @@
 - `driver` (str): The driver's identifier.
 
 ---
+## Driver Fastest Lap Telemetry
+`/driver-fastest-lap-telemetry/{year}/{gp}/{session_type}/{driver}`
 
-## /driver-fastest-lap-telemetry/{year}/{gp}/{session_type}/{driver}
 **Description:** Retrieves basic information about the driver and track along with car telemetry data for the fastest lap of a specific driver.  
 **Method:** `GET`  
 **Parameters:**
@@ -57,8 +62,10 @@
 - `driver` (str): The driver's identifier.
 
 ---
+## Session Fastest Lap Telemetry
 
-## /session-fastest-lap-telemetry/{year}/{gp}/{session_type}
+`/session-fastest-lap-telemetry/{year}/{gp}/{session_type}`
+
 **Description:** Retrieves telemetry data for the overall fastest lap in the session.  
 **Method:** `GET`  
 **Parameters:**
@@ -67,8 +74,10 @@
 - `session_type` (str): The session type.
 
 ---
+## Session Info
 
-## /session-info/{year}/{gp}/{session_type}
+`/session-info/{year}/{gp}/{session_type}`
+
 **Description:** Retrieves general information about the session.  
 **Method:** `GET`  
 **Parameters:**
@@ -77,8 +86,10 @@
 - `session_type` (str): The session type.
 
 ---
+## Session Weather
 
-## /session-weather/{year}/{gp}/{session_type}
+`/session-weather/{year}/{gp}/{session_type}`
+
 **Description:** Retrieves weather data for the session.  
 **Method:** `GET`  
 **Parameters:**
@@ -88,7 +99,10 @@
 
 ---
 
-## /session-drivers/{year}/{gp}/{session_type}
+## Session Drivers
+
+`/session-drivers/{year}/{gp}/{session_type}`
+
 **Description:** Retrieves a list of drivers participating in the session.  
 **Method:** `GET`  
 **Parameters:**
@@ -98,7 +112,10 @@
 
 ---
 
-## /session-time/{year}/{gp}/{session_type}
+## Session Time
+
+`/session-time/{year}/{gp}/{session_type}`
+
 **Description:** Retrieves the session's start and end times.  
 **Method:** `GET`  
 **Parameters:**
@@ -108,7 +125,10 @@
 
 ---
 
-## /session-rc-messages/{year}/{gp}/{session_type}
+## Session RC Messages
+
+`/session-rc-messages/{year}/{gp}/{session_type}`
+
 **Description:** Retrieves race control messages for the session.  
 **Method:** `GET`  
 **Parameters:**
@@ -118,7 +138,10 @@
 
 ---
 
-## /circuit-geographic-data/{year}/{gp}/{session_type}
+## Circuit Geographic Data
+
+`/circuit-geographic-data/{year}/{gp}/{session_type}`
+
 **Description:** Retrieves geographic data for the circuit.  
 **Method:** `GET`  
 **Parameters:**
@@ -128,7 +151,11 @@
 
 ---
 
-## /circuit-status-history/{year}/{gp}/{session_type}
+## Circuit Status History
+
+`/circuit-status-history/{year}/{gp}/{session_type}`
+
+
 **Description:** Retrieves the status history of the circuit during the session.  
 **Method:** `GET`  
 **Parameters:**
@@ -138,7 +165,10 @@
 
 ---
 
-## /event-schedule/{year}
+## Event Schedule
+
+`/event-schedule/{year}`
+
 **Description:** Retrieves the schedule of events for the race weekend.  
 **Method:** `GET`  
 **Parameters:**
