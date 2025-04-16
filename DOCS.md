@@ -169,7 +169,7 @@
 
 `/event-schedule/{year}`
 
-**Description:** Retrieves the schedule of events for the race weekend.  
+**Description:** Retrieves the schedule of events for the race year.  
 **Method:** `GET`  
 **Parameters:**
 - `year` (int): The year of the event.
