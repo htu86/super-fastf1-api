@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import fastf1
 from utils.rateLimit import rate_limit
 from routes.lapInfo import (
   get_driver_lap_data,
@@ -23,6 +24,7 @@ from routes.eventSchedule import (
   get_event_schedule
 )
 
+fastf1.Cache.enable_cache('/cache')
 app = FastAPI()
 
 # Endpoints related to lap data
