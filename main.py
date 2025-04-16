@@ -27,6 +27,11 @@ app = FastAPI()
 
 # Endpoints related to lap data
 
+@app.get("/")
+@rate_limit(max_calls=10, max_time=60)
+def root():
+  return {"message": "Welcome to the Super FastF1 API!", "status": "healthy"}
+
 @app.get("/driver-lap-telemetry/{year}/{gp}/{session_type}/{driver}/{lap_number}")
 @rate_limit(max_calls=10, max_time=60)
 def driver_lap_telemetry(year: int, gp: str, session_type: str, driver: str, lap_number: int):
