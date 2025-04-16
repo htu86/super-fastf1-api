@@ -1,4 +1,7 @@
 # Super-FastF1 API
+
+An api built on top of the [FastF1](https://github.com/theOehrly/Fast-F1) library.
+
  Documentation can be found: [Here](DOCS.md)
 
  
