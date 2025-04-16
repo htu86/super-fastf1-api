@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import os
 import fastf1
 from utils.rateLimit import rate_limit
 from routes.lapInfo import (
@@ -24,7 +25,12 @@ from routes.eventSchedule import (
   get_event_schedule
 )
 
-fastf1.Cache.enable_cache('/cache')
+
+cache_dir = './cache'
+if not os.path.exists(cache_dir):
+    os.makedirs(cache_dir)
+
+fastf1.Cache.enable_cache(cache_dir)
 app = FastAPI()
 
 # Endpoints related to lap data
