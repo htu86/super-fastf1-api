@@ -17,7 +17,7 @@ Activating virtual enviroment:
 * ```myenv\Scripts\activate # For windows```
 
 Installing dependencies:
-* `pip install -r fastf1 uvicorn "fastapi[standard]"`
+* `pip install -r "requirements.txt"`
 
 To host the api on your own machine, run:
 * `uvicorn main:app --reload`
